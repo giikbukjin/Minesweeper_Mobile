@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.TableLayout;
@@ -15,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TableLayout table;
-        table = (TableLayout)findViewById(R.id.tableLayout);
+        table = findViewById(R.id.tableLayout);
 
-        Button[][] buttons = new Button[9][9];
+        BlockButton[][] buttons = new BlockButton[9][9];
 
         // TableRows 9개 추가
         for (int i = 0; i < 9; i++) {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
             // 각 TableRow에 Button 9개 추가
             for (int j = 0; j < 9; j++) {
-                buttons[i][j] = new Button(this);
+                buttons[i][j] = new BlockButton(this, i, j);
 
                 TableRow.LayoutParams layoutParams =
                         new TableRow.LayoutParams(
@@ -42,6 +43,23 @@ public class MainActivity extends AppCompatActivity {
                             1.0f // 버튼 넓이 일정하게
                         );
                 buttons[i][j].setLayoutParams(layoutParams);
+
+                buttons[i][j].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        BlockButton blockButton = (BlockButton) view;
+                        blockButton.breakBlock(); // Assuming breakBlock() method does not require any arguments
+                    }
+                });
+
+                buttons[i][j].setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        BlockButton blockButton = (BlockButton) view;
+                        blockButton.toggleFlag();
+                        return true; // Return true to indicate that the event was consumed.
+                    }
+                });
                 tableRow.addView(buttons[i][j]);
             }
             table.addView(tableRow);
