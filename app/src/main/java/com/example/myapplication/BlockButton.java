@@ -6,9 +6,10 @@ import android.widget.Button;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
-@SuppressLint("AppCompatCustomView")
+@SuppressLint({"AppCompatCustomView", "ViewConstructor"})
 public class BlockButton extends Button {
-    private int x, y; // 버튼의 좌표
+    private final int x;
+    private final int y; // 버튼의 좌표
     private boolean mine; // 지뢰인지 아닌지 표시
     private boolean flag; // 깃발이 꽂혔는지 표시
     private int neighborMines; // 블록 주변의 지뢰 수
@@ -62,5 +63,44 @@ public class BlockButton extends Button {
             }
             return false;
         }
+    }
+
+    @Override
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    public boolean isMine() {
+        return mine;
+    }
+
+    public void setMine(boolean mine) {
+        this.mine = mine;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public int getNeighborMines() {
+        return neighborMines;
+    }
+
+    public void setNeighborMines(int neighborMines) {
+        this.neighborMines = neighborMines;
+    }
+
+    public void reset() {
+        mine = false;
+        flag = false;
+        neighborMines = 0;
+        setText("");
+        setClickable(true);
+        setBackgroundResource(android.R.drawable.btn_default);
     }
 }
