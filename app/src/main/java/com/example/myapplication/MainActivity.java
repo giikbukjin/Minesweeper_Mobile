@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean gameOver = false;
     private final int mineCount = 10;
     private int blocksLeft = 81 - mineCount; // 지뢰가 아닌 블록 수
+
     private ToggleButton toggleButton; // 토글 버튼 추가
     private TextView textView; // 지뢰 수를 표시할 텍스트뷰 추가
     private LinearLayout gameOverDialog;
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean checkWinCondition() {
         int flaggedMines = 0;
-        int revealedBlocks = 0;
+        int oppenedBlocks = 0;
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -224,11 +225,11 @@ public class MainActivity extends AppCompatActivity {
                     flaggedMines++;
                 }
                 if (!button.isMine() && !button.isClickable()) {
-                    revealedBlocks++;
+                    oppenedBlocks++;
                 }
             }
         }
-        return (flaggedMines == mineCount && revealedBlocks == (81 - mineCount));
+        return (flaggedMines == mineCount && oppenedBlocks == (81 - mineCount));
     }
 
     private void restartGame() {
